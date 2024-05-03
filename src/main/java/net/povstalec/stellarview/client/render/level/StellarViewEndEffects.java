@@ -16,6 +16,8 @@ import net.povstalec.stellarview.api.celestials.CelestialObject;
 import net.povstalec.stellarview.api.celestials.Galaxy;
 import net.povstalec.stellarview.api.celestials.Galaxy.SpiralGalaxy;
 import net.povstalec.stellarview.api.celestials.Supernova;
+import net.povstalec.stellarview.api.celestials.Comet;
+import net.povstalec.stellarview.api.celestials.DistantGalaxyObject;
 import net.povstalec.stellarview.api.celestials.orbiting.Planet;
 import net.povstalec.stellarview.api.celestials.orbiting.Sun;
 import net.povstalec.stellarview.api.sky_effects.MeteorShower;
@@ -54,7 +56,11 @@ public class StellarViewEndEffects extends StellarViewSpecialEffects
 	
 	// Galaxies
 	public static final SpiralGalaxy MILKY_WAY = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 10842L, (byte) 4, (short) 1500)
+			.addGalacticObject(new DistantGalaxyObject(1000F, (float) Math.toRadians(139)), 300, 140, -90)
+			.addGalacticObject(new DistantGalaxyObject(1000F, (float) Math.toRadians(84)), -650, -275, 244)
+			.addGalacticObject(new DistantGalaxyObject(1000F, (float) Math.toRadians(241)), 125, -475, 69)
 			.addGalacticObject(new Supernova(10.0F, 15 * CelestialObject.TICKS_PER_DAY + 18000, 5 * CelestialObject.TICKS_PER_DAY), 10, -3, 2)
+			.addGalacticObject(new Comet(15.0F, 61 * CelestialObject.TICKS_PER_DAY + 4100, 10 * CelestialObject.TICKS_PER_DAY), 36, -4, 12)
 			.addGalacticObject(END_SUN, 36, 8, 16, 18, 30, 15);
 	
 	public StellarViewEndEffects()

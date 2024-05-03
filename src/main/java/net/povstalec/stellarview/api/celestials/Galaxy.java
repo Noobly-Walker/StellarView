@@ -21,7 +21,7 @@ public abstract class Galaxy extends StarField
 	
 	public static class SpiralGalaxy extends Galaxy
 	{
-		public static final ResourceLocation SPIRAL_GALAXY_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/planet/venus.png");
+		public static final ResourceLocation SPIRAL_GALAXY_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/galaxy/spiral_galaxy.png");
 		
 		private byte numberOfArms;
 		

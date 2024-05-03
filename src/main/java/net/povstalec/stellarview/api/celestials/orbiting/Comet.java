@@ -1,13 +1,14 @@
-package net.povstalec.stellarview.api.celestials;
+package net.povstalec.stellarview.api.celestials.orbiting;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.povstalec.stellarview.StellarView;
+import net.povstalec.stellarview.api.celestials.StellarObject;
 
 import java.util.Random;
 
-public class Comet extends StellarObject
+public class Comet extends OrbitingCelestialObject
 {
 	public static final ResourceLocation COMET_WHITE_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/sky_effect/comet/comet_white.png");
 	public static final ResourceLocation COMET_GOLD_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/sky_effect/comet/comet_gold.png");
@@ -18,44 +19,26 @@ public class Comet extends StellarObject
 	public static final ResourceLocation COMET_MAGENTA_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/sky_effect/comet/comet_magenta.png");
 	public static final ResourceLocation COMET_PINK_TEXTURE = new ResourceLocation(StellarView.MODID, "textures/environment/sky_effect/comet/comet_pink.png");
 
-	public static final ResourceLocation[] cometColors = {
-			COMET_WHITE_TEXTURE,
-			COMET_GOLD_TEXTURE,
-			COMET_MINT_TEXTURE,
-			COMET_SKY_TEXTURE,
-			COMET_CYAN_TEXTURE,
-			COMET_BLUE_TEXTURE,
-			COMET_MAGENTA_TEXTURE,
-			COMET_PINK_TEXTURE
-	};
-
 	protected final static float INITIAL_SIZE = 1;
 
 	protected float maxSize;
-	protected long start;
-	protected long duration;
+	protected float startPoint = (float) (Math.PI/4); // start showing the comet at π/4 radians or 45°
+	protected float endPoint = startPoint + this.angularVelocity * 10; // end 10 days later
 
-	public Comet(ResourceLocation texture, float maxSize, long start, long duration)
+	public Comet(ResourceLocation texture, float maxSize)
 	{
 		super(texture, INITIAL_SIZE);
 		this.maxSize = maxSize;
-		this.start = start;
-		this.duration = duration;
-
-		//TODO Make sure this works. Also, make sure there's more than just the first comet.
-		Random cometRandomizer = new Random(start);
-		ResourceLocation cometColor = cometColors[cometRandomizer.nextInt(cometColors.length)];
 	}
 
-	public Comet(float maxSize, long start, long duration)
+	public Comet(float maxSize)
 	{
-		this(COMET_WHITE_TEXTURE, maxSize, start, duration);
+		this(COMET_WHITE_TEXTURE, maxSize);
 	}
 	
 	protected boolean isVisible(ClientLevel level)
 	{
-		long gameTime = level.getDayTime();
-		return gameTime > start;
+		return this.getPhi(level, 0F) > this.startPoint;
 	}
 
 	@Override
@@ -73,29 +56,27 @@ public class Comet extends StellarObject
 	@Override
 	protected boolean shouldRender(ClientLevel level, Camera camera)
 	{
-		long gameTime = level.getDayTime();
-		return gameTime <= (start + duration);
+		return this.endPoint >= this.getPhi(level, 0F);
 	}
-	
+
 	@Override
 	protected float getSize(ClientLevel level, float partialTicks)
 	{
-		long gameTime = level.getDayTime();
-		long lifeTime = gameTime - start;
-		float cometSize = (float) (maxSize * Math.sin(Math.PI * lifeTime / duration));
-		
-		float visualSize = isVisible(level) && ((cometSize >= size) || lifeTime > duration / 2) ? cometSize : size;
-		
-		return distanceSize(visualSize) * 10;
+		float relativePhi = (this.getPhi(level, 0F) - this.startPoint) / (this.endPoint - this.startPoint);
+
+		float cometSize;
+		if (relativePhi < 0.5f) {
+			cometSize = INITIAL_SIZE + 2 * relativePhi * (maxSize - INITIAL_SIZE);
+		} else {
+			cometSize = maxSize - 2 * (relativePhi - 0.5f) * (maxSize - INITIAL_SIZE);
+		}
+		return cometSize;
 	}
 	
 	@Override
 	protected float getRotation(ClientLevel level, float partialTicks)
 	{
-		long gameTime = level.getDayTime();
-		long lifeTime = gameTime - start;
-
-		//Unlike supernovae, comets shouldn't rotate.
-		return gameTime > start ? (float) (Math.PI * start) : rotation;
+		//Unlike supernovae, comets shouldn't rotate much.
+		return (float) (Math.PI * startPoint);
 	}
 }

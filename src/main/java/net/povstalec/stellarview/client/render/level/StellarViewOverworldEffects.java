@@ -15,10 +15,9 @@ import net.povstalec.stellarview.api.celestials.CelestialObject;
 import net.povstalec.stellarview.api.celestials.Galaxy;
 import net.povstalec.stellarview.api.celestials.Galaxy.SpiralGalaxy;
 import net.povstalec.stellarview.api.celestials.Supernova;
-import net.povstalec.stellarview.api.celestials.Comet;
+import net.povstalec.stellarview.api.celestials.orbiting.Comet;
 import net.povstalec.stellarview.api.celestials.DistantGalaxyObject;
 import net.povstalec.stellarview.api.celestials.orbiting.Moon;
-import net.povstalec.stellarview.api.celestials.orbiting.Moon.DefaultMoon;
 import net.povstalec.stellarview.api.celestials.orbiting.Planet;
 import net.povstalec.stellarview.api.celestials.orbiting.Sun;
 import net.povstalec.stellarview.api.sky_effects.MeteorShower;
@@ -32,7 +31,7 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 	public static final ResourceLocation OVERWORLD_EFFECTS = new ResourceLocation("overworld");
 	
 	public static final ResourceLocation OVERWORLD_SKYBOX = new ResourceLocation(StellarView.MODID, "textures/environment/overworld_skybox/overworld");
-	
+
 	// Moons
 	private static final Moon LUNA = new Moon.DefaultMoon()
 		{
@@ -113,9 +112,19 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 		
 		private static final Planet NEPTUNE = (Planet) new Planet(Planet.NEPTUNE_TEXTURE, 0.3F)
 				.halo(Planet.NEPTUNE_HALO_TEXTURE, 0.3F);
-		
-		
-		
+
+		private static final Comet WHITE_COMET = (Comet) new Comet(Comet.COMET_WHITE_TEXTURE, 15);
+		private static final Comet GOLD_COMET = (Comet) new Comet(Comet.COMET_GOLD_TEXTURE, 8);
+		private static final Comet MINT_COMET = (Comet) new Comet(Comet.COMET_MINT_TEXTURE, 4);
+		private static final Comet SKY_COMET = (Comet) new Comet(Comet.COMET_SKY_TEXTURE, 9);
+		private static final Comet CYAN_COMET = (Comet) new Comet(Comet.COMET_CYAN_TEXTURE, 12);
+		private static final Comet BLUE_COMET = (Comet) new Comet(Comet.COMET_BLUE_TEXTURE, 3);
+		private static final Comet MAGENTA_COMET = (Comet) new Comet(Comet.COMET_MAGENTA_TEXTURE, 8);
+		private static final Comet PINK_COMET = (Comet) new Comet(Comet.COMET_PINK_TEXTURE, 6);
+
+
+
+
 		// Stars
 		private static final Sun SOL = (Sun) new Sun.VanillaSun()
 				{
@@ -137,6 +146,14 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 				.addOrbitingObject(SATURN, 1455200000F, 360F / 2822, (float) Math.toRadians(190), (float) Math.toRadians(2.48), (float) Math.toRadians(93))
 				.addOrbitingObject(URANUS, 2932900000F, 360F / 8064, (float) Math.toRadians(270), (float) Math.toRadians(1), (float) Math.toRadians(36))
 				.addOrbitingObject(NEPTUNE, 4472500000F, 360F / 15840, (float) Math.toRadians(311), (float) Math.toRadians(1.77), (float) Math.toRadians(1))
+				.addOrbitingObject(WHITE_COMET, 841000000F, 360F / 1554, (float) Math.toRadians(61), (float) Math.toRadians(46), (float) Math.toRadians(44))
+				.addOrbitingObject(GOLD_COMET, 1800000000F, 360F / 3126, (float) Math.toRadians(271), (float) Math.toRadians(81), (float) Math.toRadians(61))
+				.addOrbitingObject(MINT_COMET, 3414500000F, 360F / 9163, (float) Math.toRadians(102), (float) Math.toRadians(144), (float) Math.toRadians(96))
+				.addOrbitingObject(SKY_COMET, 4510200000F, 360F / 16264, (float) Math.toRadians(95), (float) Math.toRadians(251), (float) Math.toRadians(123))
+				.addOrbitingObject(CYAN_COMET, 6285100000F, 360F / 31320, (float) Math.toRadians(86), (float) Math.toRadians(341), (float) Math.toRadians(81))
+				.addOrbitingObject(BLUE_COMET, 9432100000F, 360F / 71641, (float) Math.toRadians(195), (float) Math.toRadians(64), (float) Math.toRadians(40))
+				.addOrbitingObject(MAGENTA_COMET, 12569800000F, 360F / 15840, (float) Math.toRadians(269), (float) Math.toRadians(282), (float) Math.toRadians(56))
+				.addOrbitingObject(PINK_COMET, 16316300000F, 360F / 15840, (float) Math.toRadians(340), (float) Math.toRadians(1.77), (float) Math.toRadians(21))
 				.addOrbitingObject(EARTH, 147280000, 360F / 96, 0, 0, 0);
 		//Earth added last because planets kept rendering over the Moon
 		//TODO Add a built-in way of ordering the planets by distance
@@ -150,7 +167,6 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 				.addGalacticObject(new DistantGalaxyObject(1000F, (float) Math.toRadians(84)), -650, -275, 244)
 				.addGalacticObject(new DistantGalaxyObject(1000F, (float) Math.toRadians(241)), 125, -475, 69)
 				.addGalacticObject(new Supernova(10.0F, 15 * CelestialObject.TICKS_PER_DAY + 18000, 5 * CelestialObject.TICKS_PER_DAY), 10, -3, 2)
-				.addGalacticObject(new Comet(15.0F, 61 * CelestialObject.TICKS_PER_DAY + 4100, 10 * CelestialObject.TICKS_PER_DAY), 36, -4, 12)
 				.addGalacticObject(SOL, 0, 0, 16, 18, 0, 90);
 	
 	public StellarViewOverworldEffects()

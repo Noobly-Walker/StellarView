@@ -23,7 +23,7 @@ public class Comet extends OrbitingCelestialObject
 
 	protected float maxSize;
 	protected float startPoint = (float) (Math.PI/4); // start showing the comet at π/4 radians or 45°
-	protected float endPoint = startPoint + this.angularVelocity * 10; // end 10 days later
+	protected float endPoint = (float) (startPoint + Math.toRadians(this.angularVelocity * 20)); // end 20 days later
 
 	public Comet(ResourceLocation texture, float maxSize)
 	{
@@ -38,7 +38,8 @@ public class Comet extends OrbitingCelestialObject
 	
 	protected boolean isVisible(ClientLevel level)
 	{
-		return this.getPhi(level, 0F) > this.startPoint;
+		Boolean isVis = this.getPhi(level, 0F) > this.startPoint;
+		return isVis;
 	}
 
 	@Override
@@ -56,20 +57,18 @@ public class Comet extends OrbitingCelestialObject
 	@Override
 	protected boolean shouldRender(ClientLevel level, Camera camera)
 	{
-		return this.endPoint >= this.getPhi(level, 0F);
+		Boolean rend = this.endPoint >= this.getPhi(level, 0F);
+		return rend;
 	}
 
 	@Override
 	protected float getSize(ClientLevel level, float partialTicks)
 	{
-		float relativePhi = (this.getPhi(level, 0F) - this.startPoint) / (this.endPoint - this.startPoint);
-
+		float phi = this.getPhi(level, 0F);
+		float relativePhi = (phi - this.startPoint) / (this.endPoint - this.startPoint);
 		float cometSize;
-		if (relativePhi < 0.5f) {
-			cometSize = INITIAL_SIZE + 2 * relativePhi * (maxSize - INITIAL_SIZE);
-		} else {
-			cometSize = maxSize - 2 * (relativePhi - 0.5f) * (maxSize - INITIAL_SIZE);
-		}
+		if (relativePhi < 0.5f) { cometSize = INITIAL_SIZE + 2 * relativePhi * (maxSize - INITIAL_SIZE); }
+		else { cometSize = maxSize - 2 * (relativePhi - 0.5f) * (maxSize - INITIAL_SIZE); }
 		return cometSize;
 	}
 	

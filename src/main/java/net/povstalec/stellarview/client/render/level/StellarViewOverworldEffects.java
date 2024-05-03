@@ -124,7 +124,6 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 
 
 
-
 		// Stars
 		private static final Sun SOL = (Sun) new Sun.VanillaSun()
 				{

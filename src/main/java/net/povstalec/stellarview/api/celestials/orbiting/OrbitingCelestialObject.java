@@ -43,7 +43,7 @@ public class OrbitingCelestialObject extends StellarObject
 	@Override
 	protected float getPhi(ClientLevel level, float partialTicks)
 	{
-		return (this.initialPhi + (float) Math.toRadians(angularVelocity * ((float) level.getDayTime() / 24000))) % (float) (Math.PI*2);
+		return this.initialPhi + (float) Math.toRadians(angularVelocity * ((float) level.getDayTime() / 24000));
 	}
 
 	@Override

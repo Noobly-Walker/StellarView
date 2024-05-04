@@ -35,12 +35,6 @@ public class Comet extends OrbitingCelestialObject
 	{
 		this(COMET_WHITE_TEXTURE, maxSize);
 	}
-	
-	protected boolean isVisible(ClientLevel level)
-	{
-		Boolean isVis = this.getPhi(level, 0F) > this.startPoint;
-		return isVis;
-	}
 
 	@Override
 	protected boolean shouldBlend(ClientLevel level, Camera camera)
@@ -49,15 +43,10 @@ public class Comet extends OrbitingCelestialObject
 	}
 
 	@Override
-	protected boolean isVisibleDuringDay(ClientLevel level, Camera camera)
-	{
-		return isVisible(level);
-	}
-
-	@Override
 	protected boolean shouldRender(ClientLevel level, Camera camera)
 	{
-		Boolean rend = this.endPoint >= this.getPhi(level, 0F);
+		float phi = this.getPhi(level, 0F);
+		Boolean rend = this.startPoint > Math.sin(phi) && Math.sin(phi) < this.endPoint;
 		return rend;
 	}
 
@@ -77,5 +66,11 @@ public class Comet extends OrbitingCelestialObject
 	{
 		//Unlike supernovae, comets shouldn't rotate much.
 		return (float) (Math.PI * startPoint);
+	}
+
+	@Override
+	protected float getPhi(ClientLevel level, float partialTicks)
+	{
+		return (this.initialPhi + (float) Math.toRadians(angularVelocity * ((float) level.getDayTime() / 24000))) % (float) (Math.PI*2);
 	}
 }

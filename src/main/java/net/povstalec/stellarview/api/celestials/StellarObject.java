@@ -45,7 +45,7 @@ public abstract class StellarObject extends CelestialObject
 		float y = -coordinates.y + offsetCoords.y;
 		float z = -coordinates.z + offsetCoords.z;
 
-		return (float) StellarCoordinates.sphericalPhi(x, y, z) % (float) (Math.PI*2);
+		return (float) StellarCoordinates.sphericalPhi(x, y, z);
 	}
 	
 	protected float distanceSize(float size)

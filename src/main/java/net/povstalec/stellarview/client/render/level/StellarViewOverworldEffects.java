@@ -143,7 +143,8 @@ public class StellarViewOverworldEffects extends StellarViewSpecialEffects
 		//public static final StarField VANILLA = new StarField.VanillaStarField(10, 10842L, (short) 1500);
 		
 		// Galaxies
-		public static final SpiralGalaxy MILKY_WAY = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 10842L, (byte) 4, (short) 1500)
+		public static final SpiralGalaxy MILKY_WAY = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 10842L, (byte) 4, (short) 1500, false)
+				.addGalacticObject(new Galaxy.SpiralGalaxy(12, 32527L, (byte) 4, (short) 1500, true), 0,32,0)
 				.addGalacticObject(new Supernova(10.0F, 15 * CelestialObject.TICKS_PER_DAY + 18000, 5 * CelestialObject.TICKS_PER_DAY), 10, -3, 2)
 				.addGalacticObject(SOL, 0, 0, 16, 18, 0, 90);
 	

@@ -128,14 +128,18 @@ public class Star
 	 * @param partialTicks
 	 * @return
 	 */
-	public static float getStarBrightness(ClientLevel level, Camera camera, float partialTicks)
+	public static float getStarBrightness(ClientLevel level, Camera camera, float partialTicks, boolean isTwinkling)
 	{
 		float rain = 1.0F - level.getRainLevel(partialTicks);
 		float starBrightness = level.getStarBrightness(partialTicks);
+		float twinkleMagnitude = (float) Math.sin(level.getDayTime())/10 + 0.8F;
 		starBrightness = StellarViewConfig.day_stars.get() && starBrightness < 0.5F ? 0.5F : starBrightness;
 		if(StellarViewConfig.bright_stars.get())
 			starBrightness = starBrightness * (1 + ((float) (15 - level.getLightEngine().getRawBrightness(camera.getEntity().getOnPos().above(), 15)) / 15));
 		starBrightness = starBrightness * rain;
+
+		if(isTwinkling)
+			starBrightness *= twinkleMagnitude;
 		
 		return starBrightness;
 	}

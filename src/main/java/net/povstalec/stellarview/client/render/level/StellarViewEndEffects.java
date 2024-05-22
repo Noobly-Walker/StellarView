@@ -53,9 +53,11 @@ public class StellarViewEndEffects extends StellarViewSpecialEffects
 			.addOrbitingObject(END, 147280000, 360F / 96, 0, 0, 0);
 	
 	// Galaxies
-	public static final SpiralGalaxy MILKY_WAY = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 10842L, (byte) 4, (short) 1500)
+	public static final SpiralGalaxy MILKY_WAY = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 10842L, (byte) 4, (short) 1500, false)
 			.addGalacticObject(new Supernova(10.0F, 15 * CelestialObject.TICKS_PER_DAY + 18000, 5 * CelestialObject.TICKS_PER_DAY), 10, -3, 2)
 			.addGalacticObject(END_SUN, 36, 8, 16, 18, 30, 15);
+
+	public static final SpiralGalaxy MILKY_WAY_TWINKLE = (SpiralGalaxy) new Galaxy.SpiralGalaxy(100, 32527L, (byte) 4, (short) 1500, true);
 	
 	public StellarViewEndEffects()
 	{
@@ -77,6 +79,7 @@ public class StellarViewEndEffects extends StellarViewSpecialEffects
 	public void setupGalaxy()
 	{
 		MILKY_WAY.setStarBuffer(36, 8, 16, 18, 30, 15);
+		MILKY_WAY_TWINKLE.setStarBuffer(OverworldConfig.milky_way_x.get(), OverworldConfig.milky_way_y.get(), OverworldConfig.milky_way_z.get(), 0, 0, 0);
 	}
 	
 	@Override

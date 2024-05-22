@@ -12,9 +12,9 @@ import net.povstalec.stellarview.client.render.level.misc.StellarCoordinates;
 
 public abstract class Galaxy extends StarField
 {
-	protected Galaxy(ResourceLocation texture, float size, long seed, short numberOfStars)
+	protected Galaxy(ResourceLocation texture, float size, long seed, short numberOfStars, boolean isTwinkling)
 	{
-		super(texture, size, seed, numberOfStars);
+		super(texture, size, seed, numberOfStars, isTwinkling);
 	}
 	
 	
@@ -25,9 +25,9 @@ public abstract class Galaxy extends StarField
 		
 		private byte numberOfArms;
 		
-		public SpiralGalaxy(float size, long seed, byte numberOfArms, short numberOfStars)
+		public SpiralGalaxy(float size, long seed, byte numberOfArms, short numberOfStars, boolean isTwinkling)
 		{
-			super(SPIRAL_GALAXY_TEXTURE, size, seed, numberOfStars);
+			super(SPIRAL_GALAXY_TEXTURE, size, seed, numberOfStars, isTwinkling);
 			this.numberOfArms = numberOfArms;
 		}
 
@@ -84,9 +84,9 @@ public abstract class Galaxy extends StarField
 	
 	public static class LenticularGalaxy extends Galaxy
 	{
-		public LenticularGalaxy(ResourceLocation texture, float size, long seed, short numberOfStars)
+		public LenticularGalaxy(ResourceLocation texture, float size, long seed, short numberOfStars, boolean isTwinkling)
 		{
-			super(texture, size, seed, numberOfStars);
+			super(texture, size, seed, numberOfStars, isTwinkling);
 		}
 
 		@Override

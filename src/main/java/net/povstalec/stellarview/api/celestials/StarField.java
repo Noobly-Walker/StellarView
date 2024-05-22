@@ -40,14 +40,18 @@ public abstract class StarField extends StellarObject
 	protected short numberOfStars;
 	
 	protected Vector3f offset = new Vector3f(0, 0, 0);
-	
-	public StarField(ResourceLocation texture, float size, long seed, short numberOfStars)
+
+	protected boolean isTwinkling;
+
+	public StarField(ResourceLocation texture, float size, long seed, short numberOfStars, boolean isTwinkling)
 	{
 		super(texture, size);
 		
 		this.seed = seed;
 		
 		this.numberOfStars = numberOfStars;
+
+		this.isTwinkling = isTwinkling;
 	}
 	
 	public StarField setStarBuffer(float xOffset, float yOffset, float zOffset,
@@ -102,7 +106,7 @@ public abstract class StarField extends StellarObject
 	protected void renderStars(ClientLevel level, Camera camera, float partialTicks, float rain, PoseStack stack, Matrix4f projectionMatrix, Runnable setupFog,
 			Vector3f skyAxisRotation, Vector3f axisRotation)
 	{
-		float starBrightness = Star.getStarBrightness(level, camera, partialTicks);
+		float starBrightness = Star.getStarBrightness(level, camera, partialTicks, isTwinkling);
 		
 		if(starBrightness > 0.0F)
 		{
@@ -151,9 +155,9 @@ public abstract class StarField extends StellarObject
 	
 	public static class GlobularCluster extends StarField
 	{
-		public GlobularCluster(ResourceLocation texture, float size, long seed, short numberOfStars)
+		public GlobularCluster(ResourceLocation texture, float size, long seed, short numberOfStars, boolean isTwinkling)
 		{
-			super(texture, size, seed, numberOfStars);
+			super(texture, size, seed, numberOfStars, isTwinkling);
 		}
 
 		@Override
@@ -182,9 +186,9 @@ public abstract class StarField extends StellarObject
 	
 	public static class VanillaStarField extends GlobularCluster
 	{
-		public VanillaStarField(ResourceLocation texture, float size)
+		public VanillaStarField(ResourceLocation texture, float size, boolean isTwinkling)
 		{
-			super(texture, size, 10842L, (short) 1500);
+			super(texture, size, 10842L, (short) 1500, isTwinkling);
 		}
 	}
 }

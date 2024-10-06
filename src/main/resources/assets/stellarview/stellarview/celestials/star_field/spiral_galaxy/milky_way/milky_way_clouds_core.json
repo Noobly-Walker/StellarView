@@ -8,8 +8,8 @@
 	"stars": 200,
 	
 	"x_stretch": 3,
-	"y_stretch": 0.5,
-	"z_stretch": 0.5,
+	"y_stretch": 1,
+	"z_stretch": 1,
 	
 	"texture_layers":
 	[
